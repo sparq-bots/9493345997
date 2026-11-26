@@ -190,7 +190,7 @@ main > :last-child { margin-bottom: 0; }
 main h1.hl { background: #ffd84d; box-shadow: 0 0 0 .15em #ffd84d; border-radius: 0; }
 
 /* Words with a Greek/Hebrew page: soft blue tint. */
-main .w { background: #edf3f8; border-radius: 3px; padding: 0 .12em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+main .w { background: #edf3f8; border-radius: 0; padding: 0 .12em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 /* The follow-along highlight wins over the tint while a verse is read. */
 .vs.hl .w { background: transparent; }
 
@@ -215,3 +215,8 @@ main .w { background: #edf3f8; border-radius: 3px; padding: 0 .12em; box-decorat
 
 /* Pop-ups: rounded corners. */
 .pop-box { border-radius: 14px; }
+
+/* Language menu: rounded corners like the pop-ups (rows inside too). */
+.panel { border-radius: 14px; overflow: hidden; }
+.panel input { border-radius: 8px; }
+.panel li { border-radius: 8px; }
