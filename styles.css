@@ -139,13 +139,14 @@ main { touch-action: pan-y pinch-zoom; }
 @media (max-width: 560px) { #langBtn.icon { width: 1.9rem; } }
 
 /* Top bar colour: royal blue, white icons. */
-/* Top bar: air force blue, with black buttons and white icons. */
+/* Top bar: air force blue; its buttons are the same blue with white icons
+   and a faint outline (darker while switched on). */
 .bar { background: #5d8aa8; border-bottom-color: #5d8aa8; }
-.bar .btn, .bar #langBtn.icon { background: #111; border-color: #111; color: #fff; }
+.bar .btn, .bar #langBtn.icon { background: #5d8aa8; border-color: #8aabc2; color: #fff; }
 .bar .btn svg, .bar #listen svg { color: #fff; stroke: #fff; }
 .bar #langBtn.icon svg { stroke: #fff; }
-.bar .btn:hover, .bar #langBtn.icon:hover { background: #333; }
-.bar #listen[aria-pressed="true"] { background: #000; border-color: #fff; }
+.bar .btn:hover, .bar #langBtn.icon:hover { background: #6b97b4; }
+.bar #listen[aria-pressed="true"], .bar #langBtn.icon[aria-expanded="true"] { background: #4b7592; border-color: #fff; }
 
 /* Follow-along highlight: yellow, square corners. */
 .vs { border-radius: 0; }
@@ -220,3 +221,30 @@ main .w { background: #edf3f8; border-radius: 0; padding: 0 .12em; box-decoratio
 .panel { border-radius: 14px; overflow: hidden; }
 .panel input { border-radius: 8px; }
 .panel li { border-radius: 8px; }
+
+/* Language search box: thin border, also while typing (no thick focus ring). */
+.panel input { border: 1px solid #111; }
+.panel input:focus, .panel input:focus-visible { outline: none; border-color: #111; box-shadow: none; }
+
+/* Language search: a magnifier icon instead of hint text. */
+.panel input {
+  padding-inline-start: 2rem;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='M15.5 15.5L20 20'/%3E%3C/svg%3E") no-repeat left .6rem center / 1.05rem;
+}
+[dir="rtl"] .panel input, .panel input:dir(rtl) { background-position: right .6rem center; }
+
+/* Language list: a little smaller text. */
+.panel li { font-size: .9rem; padding-block: .3rem; }
+.panel li small { font-size: .78rem; }
+
+/* Language list text smaller still; hairline outline on the top bar buttons. */
+.panel li { font-size: .82rem; }
+.panel li small { font-size: .72rem; }
+/* (Browsers round thin borders up to a full pixel, so the hairline is drawn as an inset shadow.) */
+.bar .btn, .bar #langBtn.icon { border-color: transparent; box-shadow: inset 0 0 0 .5px rgba(255,255,255,.6); }
+.bar #listen[aria-pressed="true"], .bar #langBtn.icon[aria-expanded="true"] { border-color: transparent; box-shadow: inset 0 0 0 .5px rgba(255,255,255,.95); }
+
+/* Top bar buttons sit almost touching. */
+.bar .tools { gap: .08rem; }
+.bar .btn, .bar #langBtn.icon { border-width: 0; }
+.bar .tools { gap: .12rem; }

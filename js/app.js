@@ -690,7 +690,7 @@ function applyUi() {
   if ($('langBtn').dataset.name) { const n = `${T('language')}: ${$('langBtn').dataset.name}`; $('langBtn').setAttribute('aria-label', n); $('langBtn').title = n; } label('prev', 'prev'); label('next', 'next');
   label('bookSel', 'book'); label('chSel', 'chapter');
   $('listen').setAttribute('aria-label', T('listen'));
-  $('langSearch').placeholder = T('search'); $('langSearch').setAttribute('aria-label', T('search'));
+  $('langSearch').placeholder = ''; $('langSearch').setAttribute('aria-label', T('search'));   // no hint text: a magnifier icon (CSS); screen readers still hear the label
   $('langPanel').dir = /^(ar|fa|ur|ps)$/.test(S.ui) ? 'rtl' : 'ltr';
   $('licPop').querySelector('.lic-close').setAttribute('aria-label', T('close'));
   $('wordPop').querySelector('.lic-close').setAttribute('aria-label', T('close'));
