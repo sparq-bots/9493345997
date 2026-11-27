@@ -1,7 +1,8 @@
 // Follow-along: which verse is being read right now.
 //
-// No timing files exist yet, so the position is worked out while the audio
-// plays. A first guess comes from text length (longer verses take longer to
+// When a timing file exists for the recording (worked out ahead of time by the
+// verse-timing-tools repo), the highlight follows it exactly. Otherwise the
+// position is worked out while the audio plays. A first guess comes from text length (longer verses take longer to
 // read). Readers pause between verses, so wherever the browser can listen to
 // the audio (Chrome, Edge, Android), each pause it hears "anchors" the next
 // verse to the real time it started. Every guess after that is re-spread
@@ -21,6 +22,7 @@ export class Follower {
     this.n = n;
     this.cum = [0];
     for (let i = 0; i < n; i++) this.cum.push(this.cum[i] + Math.max(12, weights[i] || 0));
+    this.exact = null;                 // exact start time of every verse, when a timing file exists
     this.anchors = new Map();          // verse index → start time (seconds)
     this.soft0 = true;                 // start of verse 1 is only a guess so far
     this.quiet = 0; this.loud = 0; this.level = 0; this.sinceSound = 0;
@@ -106,8 +108,17 @@ export class Follower {
   // heard, the highlight waits for the pause before moving on (with some
   // slack in case a reader runs two verses together), so it doesn't jump ahead.
   // Index of the verse being read; -1 while the chapter title is read.
+  // Exact verse start times (seconds, one per verse) from a timing file: no guessing needed.
+  setExact(starts) { if (starts?.length === this.n) this.exact = starts; }
+
   current() {
     const t = this.aud.currentTime;
+    if (this.exact) {
+      if (t < this.exact[0] - 0.15) return -1;
+      let i = 0;
+      for (let j = 1; j < this.n; j++) if (this.exact[j] - 0.15 <= t) i = j; else break;
+      return i;
+    }
     if (t < this.start(0)) return -1;
     const hearing = this.timer && this.loud > 0;
     let i = 0;

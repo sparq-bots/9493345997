@@ -759,9 +759,9 @@ async function arcTitle(rec) {
 
 // --- follow along -------------------------------------------------------------
 // While the audio plays, the verse being read gets a yellow highlight (the
-// chapter title first, while it is read out). There are
-// no timing files yet, so the position is estimated from how much text comes
-// before each verse (after a short spoken chapter title).
+// chapter title first, while it is read out). With a timing file the highlight
+// is exact; otherwise the position is estimated from how much text comes before
+// each verse (after a short spoken chapter title), corrected by pauses heard.
 
 function followAlong() {
   const aud = $('aud'), main = $('text');
@@ -772,8 +772,10 @@ function followAlong() {
     const spans = [...main.querySelectorAll('.vs')];
     if (!spans.length) return;
     S.follow.reset(spans.length, spans.map(sp => sp.textContent.length));
-    S.hl = { spans, i: -2 };
+    S.hl = { spans, i: -2, exact: false };
+    loadTimings(cur.rec.id, S.book);
   }
+  if (!S.hl.exact) S.hl.exact = applyTimings(cur.rec.id, S.hl.spans);
   const i = S.follow.current();
   if (i === S.hl.i) return;
   const at = k => (k < 0 ? main.querySelector('h1') : S.hl.spans[k]);   // -1: the chapter title is being read
@@ -788,6 +790,41 @@ function followAlong() {
   const bottom = innerHeight - ($('player').closest('.bottom')?.offsetHeight || 0);
   if (!aud.paused && (r.top < 56 || r.bottom > bottom)) el.scrollIntoView({ block: 'center', behavior: 'smooth' });
 }
+// Exact verse start times: content/timings/<recording>/<BOOK>.json, made by lining the
+// audio up with the text (verse-timing-tools repo). {"1": {"v": ["1","2",…], "t": [4.1, 9.8, …], "q": 0.7}}
+const timings = new Map();
+function loadTimings(rec, book) {
+  const k = `${rec}/${book}`;
+  if (!timings.has(k)) {
+    timings.set(k, null);
+    fetchJson(`content/timings/${encodeURIComponent(rec)}/${book}.json` + V)
+      .then(d => timings.set(k, d)).catch(() => timings.set(k, {}));
+  }
+}
+function applyTimings(rec, spans) {
+  const d = timings.get(`${rec}/${S.book}`);
+  if (d === null || d === undefined) return false;          // still loading: try again on the next tick
+  const c = d[S.ch];
+  if (!c || !(c.q >= 0.45)) return true;                     // none (or not confident): keep estimating
+  const at = Object.fromEntries(c.v.map((v, i) => [v, c.t[i]]));
+  // One start per span; a verse split over two paragraphs shares its time by text length.
+  const starts = [];
+  for (let i = 0; i < spans.length; i++) {
+    const v = spans[i].dataset.v;
+    if (at[v] == null) return true;                          // verse numbers differ from the recording's: estimate
+    if (i > 0 && spans[i - 1].dataset.v === v) {
+      let j = i; while (j < spans.length && spans[j].dataset.v === v) j++;
+      const next = j < spans.length ? at[spans[j].dataset.v] : $('aud').duration;
+      let first = i - 1; while (first > 0 && spans[first - 1].dataset.v === v) first--;
+      const tot = spans.slice(first, j).reduce((n, s) => n + s.textContent.length, 0) || 1;
+      const before = spans.slice(first, i).reduce((n, s) => n + s.textContent.length, 0);
+      starts.push(at[v] + (next - at[v]) * before / tot);
+    } else starts.push(at[v]);
+  }
+  S.follow.setExact(starts);
+  return true;
+}
+
 // With audio on, the chapter title starts out highlighted (it is read first).
 function markTitle() {
   const h = $('text').querySelector('h1');
