@@ -248,3 +248,14 @@ main .w { background: #edf3f8; border-radius: 0; padding: 0 .12em; box-decoratio
 .bar .tools { gap: .08rem; }
 .bar .btn, .bar #langBtn.icon { border-width: 0; }
 .bar .tools { gap: .12rem; }
+
+/* Pop-up close buttons: red with a thin black trim and a white ×. */
+.lic-close { top: .6rem; right: .6rem; width: 1.6rem; height: 1.6rem; padding: 0; background: #d62828; color: #fff; border: 1px solid #111; border-radius: 50%; font-size: .8rem; line-height: 1; display: inline-flex; align-items: center; justify-content: center; }
+.lic-close:hover { background: #b81f1f; }
+.lic-close:focus { outline: none; }
+.lic-close:focus-visible { box-shadow: none; outline: none; }
+
+/* Language list: no ♪ marker, smaller text. */
+.panel li .badge { display: none; }
+.panel li { font-size: .76rem; }
+.panel li small { font-size: .68rem; }
