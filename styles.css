@@ -280,3 +280,6 @@ main .w { background: #edf3f8; border-radius: 0; padding: 0 .12em; box-decoratio
 .dock button, .dock select, .dock .btn { border-radius: 0; }
 /* Bottom bar buttons spaced like the top bar ones. */
 .dock { gap: .25rem; }
+/* Chapter title: smaller, with a shorter highlight (sides only, tight line). */
+main h1 { font-size: 1rem; line-height: 1.25; }
+main h1.hl { box-shadow: .2em 0 0 #ffd84d, -.2em 0 0 #ffd84d; }
