@@ -283,3 +283,5 @@ main .w { background: #edf3f8; border-radius: 0; padding: 0 .12em; box-decoratio
 /* Chapter title: smaller, with a shorter highlight (sides only, tight line). */
 main h1 { font-size: 1rem; line-height: 1.25; }
 main h1.hl { box-shadow: .2em 0 0 #ffd84d, -.2em 0 0 #ffd84d; }
+/* Chapter title highlight a little taller. */
+main h1.hl { padding-block: .12em; }
