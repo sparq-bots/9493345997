@@ -327,13 +327,14 @@ async function loadVolume(id, vol) {
 function renderChapter(meta, items) {
   let html = `<h1>${esc(meta.name)} ${N(S.ch)}</h1>`;
   let open = false;
+  const seen = new Set();     // a word's study is offered once per chapter (its first time)
   const openP = cls => { if (open) html += '</p>'; html += `<p class="${esc(cls)}">`; open = true; };
   for (const it of items) {
     if (it.h) { if (open) { html += '</p>'; open = false; } html += `<h2>${esc(it.h)}</h2>`; }
     else if (it.p) openP(it.p);
     else if (it.v) {
       if (!open) openP('p');
-      html += `<span class="vs" data-v="${esc(it.v)}">` + (it.c ? '' : `<sup class="v">${esc(localDigits(it.v, S.nu))}</sup>`) + (it.s ? taggedHtml(it.t, it.s) : esc(it.t)) + '</span> ';
+      html += `<span class="vs" data-v="${esc(it.v)}">` + (it.c ? '' : `<sup class="v">${esc(localDigits(it.v, S.nu))}</sup>`) + (it.s ? taggedHtml(it.t, it.s, seen) : esc(it.t)) + '</span> ';
     }
   }
   // Small ⓘ right after the chapter's last word; tapping it opens the licence
@@ -812,11 +813,15 @@ const PLAIN_WORDS = new Set(('a an the and or but nor so yet for of to from in o
   + 'be is am are was were been being it its this that these those there then than if not no '
   + 'he him his she her they them their we us our you your i me my also up out off over').split(' '));
 
-function taggedHtml(t, tags) {
+// seen: Strong's numbers already offered earlier in the chapter. A repeat of the
+// same original word (e.g. "Word" three times in John 1:1) is left as plain text.
+function taggedHtml(t, tags, seen = new Set()) {
   let out = '', at = 0;
   for (const [a, b, code] of tags) {
     if (a < at || b > t.length) continue;
     if (PLAIN_WORDS.has(t.slice(a, b).toLowerCase())) continue;
+    if (seen.has(code)) continue;
+    seen.add(code);
     out += esc(t.slice(at, a)) + `<span class="w" data-s="${esc(code)}">${esc(t.slice(a, b))}</span>`;
     at = b;
   }
