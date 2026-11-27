@@ -1,16 +1,12 @@
 export default {
  "title": "Reader",
  "networkId": "bmn-1",
- "build": "202611270044-33acf5",
+ "build": "202611270557-1d1e8f",
  "trustedKeys": [
   "t9py7e2EuZjKglF5Snild5RPhL+HTST+T1TKK999PEY=",
   "/+BFrxOI+MIBVseb0usSTsgB2W/8JBJhLW8dEFekRFs="
  ],
  "backupMirrors": [
-  "https://3261617189.pages.dev/",
-  "https://1165799648.pages.dev/",
-  "https://2114270445.pages.dev/",
-  "https://8320170271.pages.dev/",
   "https://6976151976.pages.dev/",
   "https://4684277730.pages.dev/",
   "https://8403267360.pages.dev/",
@@ -36,7 +32,11 @@ export default {
   "https://8647157738.surge.sh/",
   "https://7870447811.surge.sh/",
   "https://1931920313.surge.sh/",
-  "https://3884822718.surge.sh/"
+  "https://3884822718.surge.sh/",
+  "https://9783879365-b3ee3f.gitlab.io/",
+  "https://5327474955-48a281.gitlab.io/",
+  "https://4233580590-98a5a3.gitlab.io/",
+  "https://1333292958.web.app/"
  ],
  "related": {
   "prs": [

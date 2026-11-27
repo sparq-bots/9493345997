@@ -266,3 +266,17 @@ main .w { background: #edf3f8; border-radius: 0; padding: 0 .12em; box-decoratio
 .panel li small { background: #eef3f7; color: #3f6f90; border-radius: 0; padding: .05rem .4rem; white-space: nowrap; }
 .panel li.current .lead { border-color: #666; }
 .panel li.current small { background: #333; color: #ddd; }
+
+/* Top bar: white, with a thin grey line under it. Its buttons are white with
+   black icons and a hairline outline (light grey while switched on). */
+.bar { background: #fff; border-bottom: 1px solid #e3e3e3; }
+.bar .btn, .bar #langBtn.icon { background: #fff; color: #111; box-shadow: inset 0 0 0 .5px rgba(0,0,0,.45); }
+.bar .btn svg, .bar #listen svg, .bar #langBtn.icon svg { color: #111; stroke: #111; }
+.bar .btn:hover, .bar #langBtn.icon:hover { background: #f2f2f2; }
+.bar #listen[aria-pressed="true"], .bar #langBtn.icon[aria-expanded="true"] { background: #e9eef2; box-shadow: inset 0 0 0 .5px rgba(0,0,0,.8); }
+/* Top bar buttons a little apart; square corners on the top and bottom bar buttons. */
+.bar .tools { gap: .25rem; }
+.bar .btn, .bar #langBtn.icon, .bar button, .bar select,
+.dock button, .dock select, .dock .btn { border-radius: 0; }
+/* Bottom bar buttons spaced like the top bar ones. */
+.dock { gap: .25rem; }
