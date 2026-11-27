@@ -1,7 +1,7 @@
 export default {
  "title": "Reader",
  "networkId": "bmn-1",
- "build": "202611270027-77bb8c",
+ "build": "202611270044-33acf5",
  "trustedKeys": [
   "t9py7e2EuZjKglF5Snild5RPhL+HTST+T1TKK999PEY=",
   "/+BFrxOI+MIBVseb0usSTsgB2W/8JBJhLW8dEFekRFs="

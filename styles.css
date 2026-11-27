@@ -259,3 +259,10 @@ main .w { background: #edf3f8; border-radius: 0; padding: 0 .12em; box-decoratio
 .panel li .badge { display: none; }
 .panel li { font-size: .76rem; }
 .panel li small { font-size: .68rem; }
+
+/* Language list: own name, a dotted line, then the English name in a square tag. */
+.panel li { justify-content: flex-start; align-items: center; gap: .4rem; }
+.panel li .lead { flex: 1; min-width: .8rem; border-bottom: 1px dotted #bbb; transform: translateY(.3em); }
+.panel li small { background: #eef3f7; color: #3f6f90; border-radius: 0; padding: .05rem .4rem; white-space: nowrap; }
+.panel li.current .lead { border-color: #666; }
+.panel li.current small { background: #333; color: #ddd; }

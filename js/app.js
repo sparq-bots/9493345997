@@ -193,7 +193,7 @@ function renderLangList(q) {
   const html = list.slice(0, 300).map((l, i) => {
     const audio = l.audioOnly && !l.arc ? '<span class="badge">♪</span>' : '';
     const cur = l === S.lang;
-    return `<li role="option" data-code="${esc(l.code)}"${cur ? ' class="current" aria-current="true"' : ''} aria-selected="${i === 0 && !!f}"><span lang="${esc(l.bcp)}">${esc(l.name)}${audio}</span>${l.name !== l.english ? `<small>${esc(l.english)}</small>` : ''}</li>`;
+    return `<li role="option" data-code="${esc(l.code)}"${cur ? ' class="current" aria-current="true"' : ''} aria-selected="${i === 0 && !!f}"><span lang="${esc(l.bcp)}">${esc(l.name)}${audio}</span>${l.name !== l.english ? `<i class="lead" aria-hidden="true"></i><small>${esc(l.english)}</small>` : ''}</li>`;
   });
   $('langList').innerHTML = html.join('') || '<li class="muted">—</li>';
 }
